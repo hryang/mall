@@ -1,0 +1,49 @@
+FROM rabbitmq:3.7.15
+
+# See: https://stackoverflow.com/questions/30747469/how-to-add-initial-users-when-starting-a-rabbitmq-docker-container
+
+# Generate rabbitmq.config
+RUN printf '[ \n \
+    {rabbit, [ \n \
+    {loopback_users, []} \n \
+    ]}, \n \
+    {rabbitmq_management, [ \n \
+    {load_definitions, "/etc/rabbitmq/definitions.json"} \n \
+    ]} \n \
+    ].\n' > /etc/rabbitmq/rabbitmq.config
+
+RUN printf '{ \n \
+    "rabbit_version": "3.7.15", \n \
+    "users": [ \n \
+    { \n \
+    "name": "mall", \n \
+    "password": "mall", \n \
+    "tags": "administrator" \n \
+    } \n \
+    ], \n \
+    "vhosts": [ \n \
+    { \n \
+    "name": "\/mall" \n \
+    } \n \
+    ], \n \
+    "permissions": [ \n \
+    { \n \
+    "user": "mall", \n \
+    "vhost": "\/mall", \n \
+    "configure": ".*", \n \
+    "write": ".*", \n \
+    "read": ".*" \n \
+    } \n \
+    ], \n \
+    "parameters": [], \n \
+    "policies": [], \n \
+    "queues": [], \n \
+    "exchanges": [], \n \
+    "bindings": [] \n \
+    }' > /etc/rabbitmq/definitions.json
+
+RUN chown rabbitmq:rabbitmq /etc/rabbitmq/rabbitmq.config /etc/rabbitmq/definitions.json
+
+CMD ["rabbitmq-server"]
+
+RUN rabbitmq-plugins enable rabbitmq_management

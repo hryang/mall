@@ -1,0 +1,20 @@
+FROM mysql:5.7
+
+ENV MYSQL_ROOT_PASSWORD root
+
+# Create databse mall
+ENV MYSQL_DATABASE mall
+
+# Create user "reader" and grant the ALL permission.
+# See "Environments" in https://hub.docker.com/_/mysql/
+ENV MYSQL_USER reader
+
+ENV MYSQL_PASSWORD 123456
+
+# Copy the .sql file to specified directory for database initilization.
+# See "Initializing a fresh instance" in https://hub.docker.com/_/mysql/
+COPY document/sql/mall.sql /docker-entrypoint-initdb.d/
+
+# Set the character-set to utf8 for Chinese characters.
+# See https://stackoverflow.com/questions/45729326/how-to-change-the-default-character-set-of-mysql-using-docker-compose
+CMD ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_general_ci", "--skip-character-set-client-handshake"]

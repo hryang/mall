@@ -1,6 +1,8 @@
+host: 112.124.39.109
+
 spring:
   datasource:
-    url: jdbc:mysql://db:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://${host}:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: reader
     password: 123456
     druid:
@@ -18,7 +20,7 @@ spring:
         enabled: true
   elasticsearch:
     rest:
-      uris: es:9200
+      uris: ${host}:9200
 
 logging:
   file:

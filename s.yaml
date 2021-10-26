@@ -1,0 +1,47 @@
+edition: 1.0.0
+name: mall-admin
+access: quanxi-hryang
+vars:
+  region: cn-hangzhou
+services:
+  mall-admin:
+    component: devsapp/fc
+    props:
+      region: ${vars.region}
+      service: # AlibabaCloud FunctionCompute Service
+        name: mall-admin
+        internetAccess: true
+      function:
+        name: mall-admin
+        description: The mall project based on SpringBoot+MyBatis. https://github.com/macrozheng/mall
+        caPort: 8080
+        memorySize: 3072
+        handler: not-used
+        timeout: 60
+        initializationTimeout: 60
+        initializer: not-used
+        runtime: custom-container
+        customContainerConfig:
+          image: registry-vpc.cn-hangzhou.aliyuncs.com/quanxi-hryang/mall-admin:1.0-SNAPSHOT
+        
+
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
+              - POST
+
+      customDomains:
+        - domainName: auto
+          protocol: HTTP
+          routeConfigs:
+            - path: /*
+              serviceName: mall-admin
+              functionName: mall-admin
+              methods:
+                - GET
+                - POST
+# https://github.com/devsapp/fc

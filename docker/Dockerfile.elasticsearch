@@ -1,0 +1,7 @@
+FROM elasticsearch:7.6.2
+
+ENV discovery.type=single-node
+ENV cluster.name=elasticsearch
+
+# Speed up the github release downloading by https://ghproxy.com/
+RUN elasticsearch-plugin install --batch https://ghproxy.com/https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.6.2/elasticsearch-analysis-ik-7.6.2.zip
