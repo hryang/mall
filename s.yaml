@@ -1,5 +1,5 @@
 edition: 1.0.0
-name: mall-admin
+name: mall
 access: quanxi-hryang
 vars:
   region: cn-hangzhou
@@ -11,20 +11,18 @@ services:
       service: # AlibabaCloud FunctionCompute Service
         name: mall-admin
         internetAccess: true
-      function:
+      function: # # AlibabaCloud FunctionCompute Function
         name: mall-admin
         description: The mall project based on SpringBoot+MyBatis. https://github.com/macrozheng/mall
         caPort: 8080
         memorySize: 3072
         handler: not-used
         timeout: 60
-        initializationTimeout: 60
-        initializer: not-used
+        #initializationTimeout: 60
+        #initializer: not-used
         runtime: custom-container
         customContainerConfig:
           image: registry-vpc.cn-hangzhou.aliyuncs.com/quanxi-hryang/mall-admin:1.0-SNAPSHOT
-        
-
       triggers:
         - name: httpTrigger
           type: http
@@ -33,7 +31,6 @@ services:
             methods:
               - GET
               - POST
-
       customDomains:
         - domainName: auto
           protocol: HTTP
@@ -44,4 +41,80 @@ services:
               methods:
                 - GET
                 - POST
+  mall-portal:
+    component: devsapp/fc
+    props:
+      region: ${vars.region}
+      service: # AlibabaCloud FunctionCompute Service
+        name: mall-portal
+        internetAccess: true
+      function: # AlibabaCloud FunctionCompute Function
+        name: mall-portal
+        description: The mall project based on SpringBoot+MyBatis. https://github.com/macrozheng/mall
+        caPort: 8085
+        memorySize: 3072
+        handler: not-used
+        timeout: 60
+        #initializationTimeout: 60
+        #initializer: not-used
+        runtime: custom-container
+        customContainerConfig:
+          image: registry.cn-hangzhou.aliyuncs.com/quanxi-hryang/mall-portal:1.0-SNAPSHOT
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
+              - POST
+      customDomains:
+        - domainName: auto
+          protocol: HTTP
+          routeConfigs:
+            - path: /*
+              serviceName: mall-portal
+              functionName: mall-portal
+              methods:
+                - GET
+                - POST
+
+  mall-search:
+    component: devsapp/fc
+    props:
+      region: ${vars.region}
+      service: # AlibabaCloud FunctionCompute Service
+        name: mall-search
+        internetAccess: true
+      function: # AlibabaCloud FunctionCompute Function
+        name: mall-search
+        description: The mall project based on SpringBoot+MyBatis. https://github.com/macrozheng/mall
+        caPort: 8081
+        memorySize: 3072
+        handler: not-used
+        timeout: 60
+        #initializationTimeout: 60
+        #initializer: not-used
+        runtime: custom-container
+        customContainerConfig:
+          image: registry-vpc.cn-hangzhou.aliyuncs.com/quanxi-hryang/mall-search:1.0-SNAPSHOT
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
+              - POST
+      customDomains:
+        - domainName: auto
+          protocol: HTTP
+          routeConfigs:
+            - path: /*
+              serviceName: mall-search
+              functionName: mall-search
+              methods:
+                - GET
+                - POST
+
 # https://github.com/devsapp/fc
