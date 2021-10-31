@@ -20,7 +20,7 @@ services:
         timeout: 60
         runtime: custom-container
         customContainerConfig:
-          image: registry.cn-hangzhou.aliyuncs.com/quanxi-hryang/mall-admin:1.0-SNAPSHOT
+          image: registry.cn-${vars.region}.aliyuncs.com/quanxi-hryang/mall-admin:1.0-SNAPSHOT
           accelerationType: "Default"
           args: ""
           command: ""
@@ -58,7 +58,7 @@ services:
         timeout: 60
         runtime: custom-container
         customContainerConfig:
-          image: registry.cn-hangzhou.aliyuncs.com/quanxi-hryang/mall-portal:1.0-SNAPSHOT
+          image: registry.cn-${vars.region}.aliyuncs.com/quanxi-hryang/mall-portal:1.0-SNAPSHOT
       triggers:
         - name: httpTrigger
           type: http
@@ -93,7 +93,7 @@ services:
         timeout: 60
         runtime: custom-container
         customContainerConfig:
-          image: registry.cn-hangzhou.aliyuncs.com/quanxi-hryang/mall-search:1.0-SNAPSHOT
+          image: registry.cn-${vars.region}.aliyuncs.com/quanxi-hryang/mall-search:1.0-SNAPSHOT
       triggers:
         - name: httpTrigger
           type: http
@@ -112,41 +112,5 @@ services:
               methods:
                 - GET
                 - POST
-  mall-admin-web:
-    component: devsapp/fc
-    props:
-      region: ${vars.region}
-      service: # AlibabaCloud FunctionCompute Service
-        name: mall-admin-web
-        internetAccess: true
-      function: # AlibabaCloud FunctionCompute Function
-        name: mall-admin-web
-        description: The mall project based on SpringBoot+MyBatis. https://github.com/macrozheng/mall
-        caPort: 80
-        memorySize: 1536
-        handler: not-used # handler is invalid for custom container.
-        timeout: 60
-        runtime: custom-container
-        customContainerConfig:
-          image: registry.cn-hangzhou.aliyuncs.com/quanxi-hryang/mall-admin-web:1.0-SNAPSHOT
-      triggers:
-        - name: httpTrigger
-          type: http
-          config:
-            authType: anonymous
-            methods:
-              - GET
-              - POST
-      customDomains:
-        - domainName: auto
-          protocol: HTTP
-          routeConfigs:
-            - path: /*
-              serviceName: mall-admin-web
-              functionName: mall-admin-web
-              methods:
-                - GET
-                - POST
-
-
+  
 # https://github.com/devsapp/fc
