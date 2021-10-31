@@ -1,6 +1,6 @@
 edition: 1.0.0
 name: mall
-access: quanxi-hryang
+access: default
 vars:
   region: cn-hangzhou
 services:
@@ -20,7 +20,7 @@ services:
         timeout: 60
         runtime: custom-container
         customContainerConfig:
-          image: registry.cn-${vars.region}.aliyuncs.com/quanxi-hryang/mall-admin:1.0-SNAPSHOT
+          image: registry.${vars.region}.aliyuncs.com/quanxi-hryang/mall-admin:1.0-SNAPSHOT
           accelerationType: "Default"
           args: ""
           command: ""
@@ -58,7 +58,7 @@ services:
         timeout: 60
         runtime: custom-container
         customContainerConfig:
-          image: registry.cn-${vars.region}.aliyuncs.com/quanxi-hryang/mall-portal:1.0-SNAPSHOT
+          image: registry.${vars.region}.aliyuncs.com/quanxi-hryang/mall-portal:1.0-SNAPSHOT
       triggers:
         - name: httpTrigger
           type: http
@@ -93,7 +93,7 @@ services:
         timeout: 60
         runtime: custom-container
         customContainerConfig:
-          image: registry.cn-${vars.region}.aliyuncs.com/quanxi-hryang/mall-search:1.0-SNAPSHOT
+          image: registry.${vars.region}.aliyuncs.com/quanxi-hryang/mall-search:1.0-SNAPSHOT
       triggers:
         - name: httpTrigger
           type: http
