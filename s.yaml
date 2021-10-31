@@ -21,9 +21,7 @@ services:
         runtime: custom-container
         customContainerConfig:
           image: registry.${vars.region}.aliyuncs.com/quanxi-hryang/mall-admin:1.0-SNAPSHOT
-          accelerationType: "Default"
-          args: ""
-          command: ""
+          accelerationType: Default
       triggers:
         - name: httpTrigger
           type: http
@@ -59,6 +57,7 @@ services:
         runtime: custom-container
         customContainerConfig:
           image: registry.${vars.region}.aliyuncs.com/quanxi-hryang/mall-portal:1.0-SNAPSHOT
+          accelerationType: Default
       triggers:
         - name: httpTrigger
           type: http
@@ -94,6 +93,7 @@ services:
         runtime: custom-container
         customContainerConfig:
           image: registry.${vars.region}.aliyuncs.com/quanxi-hryang/mall-search:1.0-SNAPSHOT
+          accelerationType: Default
       triggers:
         - name: httpTrigger
           type: http
