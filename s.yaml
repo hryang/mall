@@ -26,6 +26,7 @@ services:
         handler: not-used
         timeout: 60
         runtime: custom-container
+        instanceConcurrency: 20
         customContainerConfig:
           image: registry.${vars.region}.aliyuncs.com/quanxi-hryang/mall-admin:1.0-SNAPSHOT
           # Enable the image acceleration.
@@ -68,6 +69,7 @@ services:
         handler: not-used
         timeout: 60
         runtime: custom-container
+        instanceConcurrency: 20
         customContainerConfig:
           image: registry.${vars.region}.aliyuncs.com/quanxi-hryang/mall-portal:1.0-SNAPSHOT
           # Enable the image acceleration.
@@ -110,6 +112,7 @@ services:
         handler: not-used
         timeout: 60
         runtime: custom-container
+        instanceConcurrency: 20
         customContainerConfig:
           image: registry.${vars.region}.aliyuncs.com/quanxi-hryang/mall-search:1.0-SNAPSHOT
           # Enable the image acceleration.
